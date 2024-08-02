@@ -15,7 +15,6 @@ const {v4:uuid} = require("uuid")
 // module.exports={router}
 const getAllProducts= async (req,res)=>{
    const products= await productModel.find({})
-   console.log(req.user)
    res.send(products)
 }
 const createProduct=async (req,res)=>{
