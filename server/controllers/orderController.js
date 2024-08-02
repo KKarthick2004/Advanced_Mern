@@ -36,6 +36,7 @@ const Order=async(req,res)=>{
     }
    const est_Date=addDate(orderDate,10)
     const response=new Ordermodel({OrderId,userId,email,Name,products:product,orderDate,est_Date,Total:total,address,PhoneNumber})
+    await Addmodel.findOneAndDelete({userId:req.user.userId})
     await response.save()
     res.send(response)
 }
