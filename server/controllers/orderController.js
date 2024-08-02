@@ -22,7 +22,9 @@ const Order=async(req,res)=>{
         const response=await productModel.find({id:arr[i]})
         const obj={}
         obj.title=response[0].title
+        obj.description=response[0].description
         obj.price=response[0].price
+        obj.image=response[0].image
         obj.quantity=productId[i].quantity
         total+=(response[0].price)*Number(productId[i].quantity)
         product.push(obj)
@@ -41,8 +43,8 @@ const Order=async(req,res)=>{
 const getOrder=async(req,res)=>{
 try{    
     const response=await Ordermodel.findOne({userId:req.user.userId})
-    const {OrderId,orderDate,est_Date,products,orderStatus}=response
-    res.status(201).json({OrderId,orderDate,est_Date,products,orderStatus})
+    const {OrderId,orderDate,est_Date,products,orderStatus,Total}=response
+    res.status(201).json({OrderId,orderDate,est_Date,products,orderStatus,Total})
 }
  catch(err){
     res.status(500).send(err)
