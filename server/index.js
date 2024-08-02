@@ -31,5 +31,5 @@ app.use(cors())
  app.use("/auth",userrouter)
  app.use("/add",Addrouter)
  app.use("/order",orderrouter)
-
+ const port=process.env.PORT || 6000
  app.listen(6000,()=>console.log("Port Activated"))
