@@ -33,43 +33,52 @@ const AddCart = async (req, res) => {
     }
 }
 
-const getDetails=async(req,res)=>{
-const id=req.user.userId;
-let response=null;
-const a=[]
-try{
- response=await Addmodel.findOne({userId:id})
-}catch(err){
-    console.log(err)
-}
-    try{
-if(!response)
-    return res.send("No products")
-const product=response.product
+const getCartProductDetails = async (req, res) => {
+    let response;
+    const a = [];
+    try {
+        const Id = req.user.userId;
+        response = await cartModel.find({ userId: Id });
 
-const arr=product.map((item)=>{
-    return item.productId
-})
-for(let i=0;i<arr.length;i++){
-    const value=await productModel.find({id:arr[i]})
-    const obj={}
-    obj.id=value[0].id
-    obj.price=value[0].price
-    obj.title=value[0].title
-    obj.image=value[0].image
-    obj.description=value[0].description
-    obj.quantity=response.product[i].quantity
-    obj.totalprice=Number(response.product[i].quantity)*obj.price
-    a.push(obj)
-}
- res.send(a)
+        if (!response || response.length === 0) {
+            return res.status(404).send({ message: "Cart not found" });
+        }
+
+        // console.log(response);
+
+        const products = response[0].product;
+        const arr = products.map((item) => item.productId);
+        // console.log(arr);
+
+        for (let i = 0; i < arr.length; i++) {
+            const value = await productModel.find({ id: arr[i] });
+            // console.log(value);
+
+            if (!value || value.length === 0) {
+                console.log(Product with id ${arr[i]} not found);
+                continue; // Skip to the next product if not found
+            }
+
+            const obj = {};
+            obj.id = value[0].id;
+            obj.price = value[0].prize; // Ensure this matches the schema
+            obj.title = value[0].title;
+            obj.image = value[0].image;
+            obj.description = value[0].description;
+
+            // Find the product in the cart to get the correct quantity
+            const cartProduct = products.find(p => p.productId === arr[i]);
+            obj.quantity = cartProduct ? cartProduct.quantity : "0";
+
+            a.push(obj);
+        }
+
+        res.send(a);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err);
     }
-    catch(err){
-        res.send("err")
-    }
-
-   }
-
+}
 const deleteproduct=async(req,res)=>{
     const id=req.user.userId
     const productId=req.body.productId
