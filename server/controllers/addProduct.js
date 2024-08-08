@@ -34,35 +34,8 @@ const AddCart = async (req, res) => {
 }
 
 const getDetails=async(req,res)=>{
-    const id=req.user.userId;
-    let response;
-    const a=[]
-    try{
-     response=await Addmodel.findOne({userId:id})
-    }catch(err){
-        console.log(err)
-    }
-    if(!response)
-        return res.send("No products")
-   const product=response.product
-
-    const arr=product.map((item)=>{
-        return item.productId
-    })
-    for(let i=0;i<arr.length;i++){
-        const value=await productModel.find({id:arr[i]})
-        const obj={}
-        obj.id=value[0].id
-        obj.price=value[0].price
-        obj.title=value[0].title
-        obj.image=value[0].image
-        obj.description=value[0].description
-        obj.quantity=response.product[i].quantity
-        obj.totalprice=Number(response.product[i].quantity)*obj.price
-        a.push(obj)
-    }
-     res.send(a)
-}
+    res.send("Called")
+   }
 
 const deleteproduct=async(req,res)=>{
     const id=req.user.userId
