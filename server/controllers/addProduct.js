@@ -62,7 +62,7 @@ const getDetails=async(req,res)=>{
         a.push(obj)
     }
 
-     res.send(a)
+     res.send("success",a)
 }
 
 const deleteproduct=async(req,res)=>{
