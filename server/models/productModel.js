@@ -4,11 +4,9 @@ const productSchema=new mongoose.Schema({
     id:{
      type:String,
      unique:true,
-     required:true,
     },
     title:{
         type:String,
-        required:[true,"Title is required"],
     },
     price:{
         type:Number,
@@ -22,7 +20,6 @@ const productSchema=new mongoose.Schema({
     },
     image:{
         type:String,
-        required:true,
     },
     rating:{
          rate:{
