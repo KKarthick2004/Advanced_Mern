@@ -76,7 +76,7 @@ const getCartProductDetails = async (req, res) => {
         res.send(a);
     } catch (err) {
         console.log(err);
-        res.status(500).send(err);
+        res.status(500).send(Err);
     }
 }
 const deleteproduct=async(req,res)=>{
