@@ -65,7 +65,7 @@ for(let i=0;i<arr.length;i++){
  res.send(a)
     }
     catch(err){
-        res.send(err)
+        res.send("err")
     }
 
    }
