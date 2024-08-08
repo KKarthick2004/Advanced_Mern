@@ -61,7 +61,6 @@ const getDetails=async(req,res)=>{
         obj.totalprice=Number(response.product[i].quantity)*obj.price
         a.push(obj)
     }
-      console.log("fetching")
      res.send(a)
 }
 
